@@ -69,6 +69,7 @@ html.menu-ouvert{overflow:hidden}
 .hero h1{color:#fff;max-width:17ch;font-size:clamp(2.25rem,4.6vw,3.625rem);letter-spacing:-.005em}
 .hero p{max-width:46ch;margin-top:16px;font-size:1.0625rem;color:rgba(255,255,255,.92)}
 .hero .lien{margin-top:22px;color:#fff}
+.colls{scroll-margin-top:var(--tete)}
 .colls ul{list-style:none;display:grid;gap:3px}
 .colls li a{position:relative;display:block;aspect-ratio:3/2;overflow:hidden;background:var(--accent);text-decoration:none}
 .coll-img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}

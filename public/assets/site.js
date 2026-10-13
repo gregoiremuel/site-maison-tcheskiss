@@ -63,6 +63,27 @@
     setTimeout(function () { els.forEach(function (el) { if (!el.classList.contains('vu') && el.getBoundingClientRect().top < innerHeight) montrer(el); }); }, 2500);
   })();
 
+  /* Liens vers une rubrique de la page (#produits…) : dans un aperçu (démonstration, espace de modification),
+     la page est affichée dans un cadre et le navigateur comprendrait le lien comme une autre page.
+     On fait alors défiler nous-mêmes jusqu'à la rubrique. Sur le site en ligne, le navigateur s'en charge. */
+  if (location.protocol === 'about:') {
+    document.addEventListener('click', function (e) {
+      if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var id = decodeURIComponent(a.getAttribute('href').slice(1));
+      var cible = id && document.getElementById(id);
+      if (!cible) return;
+      e.preventDefault();
+      var doux = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      setTimeout(function () {
+        cible.scrollIntoView({ behavior: doux ? 'smooth' : 'auto', block: 'start' });
+        if (!cible.hasAttribute('tabindex') && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA)$/.test(cible.tagName)) cible.setAttribute('tabindex', '-1');
+        try { cible.focus({ preventScroll: true }); } catch (x) { /* rien */ }
+      }, 0);
+    });
+  }
+
   /* Menu */
   var btn = $('#menu-btn'), volet = $('#menu');
   if (btn && volet) {
