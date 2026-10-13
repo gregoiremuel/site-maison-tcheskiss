@@ -98,6 +98,17 @@ async function tests() {
   verif(j.ok && /^\/photos\//.test(j.url), 'Envoi d’une photo');
   if (j.ok) { r = await req(j.url); verif(r.status === 200 && r.headers.get('content-type') === 'image/jpeg', 'La photo envoyée s’affiche'); }
 
+  /* Vidéo de fond : envoi et lecture par morceaux (Safari en a besoin) */
+  const fauxMp4 = Buffer.alloc(4096, 7);
+  r = await req('/api/video', { method: 'POST', headers: { 'Content-Type': 'video/mp4' }, body: fauxMp4 }); j = await r.json();
+  verif(j.ok && /^\/videos\//.test(j.url), 'Envoi d’une vidéo');
+  if (j.ok) {
+    r = await req(j.url, { cookie: false, headers: { Range: 'bytes=0-99' } });
+    verif(r.status === 206 && r.headers.get('content-range') === 'bytes 0-99/4096' && (await r.arrayBuffer()).byteLength === 100, 'La vidéo se lit par morceaux');
+    r = await req(j.url, { cookie: false }); verif(r.status === 200 && r.headers.get('content-type') === 'video/mp4' && r.headers.get('accept-ranges') === 'bytes', 'La vidéo s’affiche en entier');
+  }
+  r = await req('/api/video', { method: 'POST', headers: { 'Content-Type': 'video/quicktime' }, body: fauxMp4 }); verif(r.status === 415, 'Vidéo .mov refusée (format non lu partout)');
+
   /* Demande de commande d'un client : prix recalculés par le serveur */
   const client = { nom: 'Client Test', email: 'client@exemple.fr', telephone: '06 12 34 56 78', pays: 'France', message: 'Essai' };
   r = await req('/api/commande', { method: 'POST', cookie: false, ...corpsJson({ ...client, articles: [{ id: x0.id, qte: 1, prix: 1 }, { id: 'nexistepas' }] }) });

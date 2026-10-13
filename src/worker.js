@@ -105,6 +105,23 @@ export default {
         const corps = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes(C).filter((r) => r !== '/panier').map((r) => `<url><loc>${base}${r}</loc></url>`).join('')}</urlset>`;
         return new Response(corps, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
       }
+      /* Vidéos envoyées depuis l'espace de modification : lecture par morceaux (Range), indispensable pour Safari */
+      if ((methode === 'GET' || methode === 'HEAD') && p.startsWith('/videos/')) {
+        const id = p.slice(8);
+        if (!/^[a-z0-9-]{6,40}$/.test(id)) return new Response('Introuvable', { status: 404 });
+        const { value, metadata } = await env.CONTENU.getWithMetadata('video:' + id, { type: 'arrayBuffer', cacheTtl: 86400 });
+        if (!value) return new Response('Introuvable', { status: 404 });
+        const total = value.byteLength, type = (metadata && metadata.type) || 'video/mp4';
+        const base = { 'Content-Type': type, 'Accept-Ranges': 'bytes', 'Cache-Control': 'public, max-age=31536000, immutable', 'X-Content-Type-Options': 'nosniff' };
+        const m = /^bytes=(\d*)-(\d*)$/.exec(req.headers.get('Range') || '');
+        if (m && (m[1] || m[2])) {
+          let debut = m[1] ? parseInt(m[1], 10) : Math.max(0, total - parseInt(m[2], 10));
+          let fin = m[1] && m[2] ? Math.min(parseInt(m[2], 10), total - 1) : total - 1;
+          if (debut >= total || debut > fin) return new Response(null, { status: 416, headers: { 'Content-Range': `bytes */${total}` } });
+          return new Response(methode === 'HEAD' ? null : value.slice(debut, fin + 1), { status: 206, headers: { ...base, 'Content-Range': `bytes ${debut}-${fin}/${total}`, 'Content-Length': String(fin - debut + 1) } });
+        }
+        return new Response(methode === 'HEAD' ? null : value, { headers: { ...base, 'Content-Length': String(total) } });
+      }
       if (methode === 'GET' && p.startsWith('/photos/')) {
         const id = p.slice(8);
         if (!/^[a-z0-9-]{6,40}$/.test(id)) return new Response('Introuvable', { status: 404 });
@@ -186,6 +203,15 @@ export default {
           const id = Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
           await env.CONTENU.put('photo:' + id, buf, { metadata: { type } });
           return json({ ok: true, url: '/photos/' + id });
+        }
+        if (methode === 'POST' && p === '/api/video') {
+          const type = (req.headers.get('Content-Type') || '').split(';')[0];
+          if (!/^video\/(mp4|webm)$/.test(type)) return json({ ok: false, erreur: 'Format de vidéo non accepté : MP4 ou WebM.' }, 415);
+          const buf = await req.arrayBuffer();
+          if (buf.byteLength > 20 * 1024 * 1024) return json({ ok: false, erreur: 'Vidéo trop lourde (20 Mo au plus).' }, 413);
+          const id = Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+          await env.CONTENU.put('video:' + id, buf, { metadata: { type } });
+          return json({ ok: true, url: '/videos/' + id });
         }
         if (methode === 'GET' && p === '/api/commandes') {
           const liste = await env.CONTENU.list({ prefix: 'commande:', limit: 60 });

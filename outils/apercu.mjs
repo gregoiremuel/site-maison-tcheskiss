@@ -13,7 +13,7 @@ const C = JSON.parse(readFileSync(resolve(process.argv[2] || new URL('../contenu
 const { erreurs } = verifier(C);
 if (erreurs.length) { console.error(`Le contenu a ${erreurs.length} erreur(s) : lancez « npm run verifier » pour les voir. Aucun fichier fabriqué.`); process.exit(1); }
 /* Les images du site (logo, photos dans /assets/) sont intégrées au fichier de démonstration */
-const TYPES_IMG = { svg: 'image/svg+xml', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', avif: 'image/avif', gif: 'image/gif' };
+const TYPES_IMG = { svg: 'image/svg+xml', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', avif: 'image/avif', gif: 'image/gif', mp4: 'video/mp4', webm: 'video/webm' };
 const dejaVu = new Map();
 const integrer = (u) => {
   const ext = typeof u === 'string' && u.startsWith('/assets/') ? (u.match(/\.([a-z0-9]+)$/i) || [])[1] : '';

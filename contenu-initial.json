@@ -28,7 +28,8 @@
   },
   "accueil": {
     "photo": "/assets/photos/atelier-pierre-verte.jpg",
-    "video": "",
+    "video": "/assets/videos/accueil-maison.mp4",
+    "fond_video": false,
     "titre": "Joaillerie créée à Paris",
     "texte": "Bijoux et objets précieux, du dessin en 3D au polissage.",
     "mission": "Une maison qui donne aux joailliers les moyens de créer : des collections variées, du bijou délicat aux pièces les plus inattendues.",

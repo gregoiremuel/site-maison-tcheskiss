@@ -12,7 +12,7 @@ const FORME = {
   maison: ['nom', 'logo', 'logo_texte', 'ville', 'adresse', 'code_postal', 'email', 'telephone', 'instagram', 'linkedin', 'pinterest', 'youtube', 'fabrication', 'description_google'],
   theme: ['fond', 'encre', 'gris', 'trait'],
   annonce: ['afficher', 'texte'],
-  accueil: ['photo', 'video', 'titre', 'texte', 'mission', 'photo_atelier'],
+  accueil: ['photo', 'video', 'fond_video', 'titre', 'texte', 'mission', 'photo_atelier'],
   pages: Object.keys(PAGES),
   commandes: ['actif', 'delai_reponse', 'cle_web3forms', 'email', 'confirmation'],
   mentions: ['raison_sociale', 'forme', 'siret', 'adresse', 'directeur_publication', 'email', 'mediateur'],
@@ -105,7 +105,10 @@ export function verifier(C) {
   });
   if (essais) afaire.push(`${essais} photo(s) d’essai sur les pièces : à remplacer par les photos de la maison.`);
   [['accueil.photo', C.accueil.photo], ['accueil.photo_atelier', C.accueil.photo_atelier], ['maison.logo', M.logo], ['maison.logo_texte', M.logo_texte], ...C.collections.map((c, i) => [`collections[${i}].photo`, c.photo])].forEach(([k, v]) => photoOk(k, v));
-  if (C.accueil.video && !/^https:\/\/\S+\.(mp4|webm)(\?\S*)?$/i.test(C.accueil.video)) E('accueil.video doit être un lien https se terminant par .mp4 ou .webm.');
+  if (C.accueil.video && !/^(https:\/\/\S+\.(mp4|webm)(\?\S*)?|\/videos\/[a-z0-9-]+|\/assets\/\S+\.(mp4|webm)|data:video\/(mp4|webm);base64,\S+)$/i.test(C.accueil.video)) E('accueil.video : un fichier envoyé, ou un lien https se terminant par .mp4 ou .webm.');
+  else if (/^\/assets\//.test(C.accueil.video || '') && !existsSync(fileURLToPath(new URL('../public' + C.accueil.video, import.meta.url)))) E(`accueil.video : le fichier public${C.accueil.video} n’existe pas.`);
+  if (typeof C.accueil.fond_video !== 'boolean') E('accueil.fond_video doit valoir true ou false.');
+  else if (C.accueil.fond_video && !C.accueil.video) A('accueil.fond_video est coché mais aucune vidéo n’est choisie : la photo s’affiche.');
 
   /* Pages */
   Object.keys(PAGES).forEach((k) => {

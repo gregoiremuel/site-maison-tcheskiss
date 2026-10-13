@@ -8,6 +8,19 @@
   var euros = function (n) { var p = n.toFixed(n % 1 ? 2 : 0).split('.'); return p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + (p[1] ? ',' + p[1] : '') + ' €'; };
   document.documentElement.classList.add('js');
 
+  /* Vidéo de fond : pause au clic, et à l'arrêt si le visiteur a demandé moins d'animations */
+  (function () {
+    var PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>', LECTURE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5l11 6.5-11 6.5z"/></svg>';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-video-fond]'), function (v) {
+      var b = v.parentNode.querySelector('[data-video-pause]');
+      var etat = function (pause) { if (!b) return; b.setAttribute('aria-pressed', String(pause)); b.setAttribute('aria-label', pause ? 'Lancer la vidéo' : 'Mettre la vidéo en pause'); b.innerHTML = pause ? LECTURE : PAUSE; };
+      var calme = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (calme) { v.removeAttribute('autoplay'); try { v.pause(); } catch (e) { /* rien */ } etat(true); }
+      v.addEventListener('error', function () { setTimeout(function () { if (b && (v.error || v.networkState === 3)) b.hidden = true; }, 0); }, true);
+      if (b) b.addEventListener('click', function () { if (v.paused) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); etat(false); } else { v.pause(); etat(true); } });
+    });
+  })();
+
   /* Photos manquantes : on les cache */
   $$('img').forEach(function (im) { im.addEventListener('error', function () { im.style.visibility = 'hidden'; }); });
 

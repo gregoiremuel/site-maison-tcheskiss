@@ -170,3 +170,8 @@ details.item>summary span.s{display:block;color:var(--gris);font-size:.9375rem;o
 .photos-liste input[type=file]{position:absolute;left:-9999px}
 .grille{align-items:start}
 .grille>.champ:has(.photos-liste),.grille>.champ:has(.photo),.grille>.champ:has(textarea){grid-column:1/-1}
+
+/* Vidéo de fond */
+.video-champ{display:grid;gap:12px}
+.video-apercu video{width:100%;max-width:320px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:#000;display:block}
+.video-champ .saisie{margin-top:8px}

@@ -50,6 +50,15 @@ function src(p, largeur) {
   if (/^(https:\/\/|data:image\/|\/photos\/|\/assets\/)/i.test(p)) return p;
   return '';
 }
+/* Vidéo de fond (accueil) : fichier envoyé depuis l'espace de modification, lien https .mp4/.webm, ou fichier du site */
+export const videoSrc = (v) => { v = String(v || '').trim(); return /^(https:\/\/\S+\.(mp4|webm)(\?\S*)?|\/videos\/[a-z0-9-]+|\/assets\/\S+\.(mp4|webm)|data:video\/(mp4|webm);base64,\S+)$/i.test(v) ? v : ''; };
+const ICO_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>';
+function videoFond(v, poster, cls) {
+  const s = videoSrc(v);
+  if (!s) return '';
+  const type = /^data:video\/webm|\.webm(\?|$)/i.test(s) ? 'video/webm' : 'video/mp4';
+  return `<video class="${cls}" autoplay muted loop playsinline preload="auto"${poster ? ` poster="${esc(poster)}"` : ''} aria-hidden="true" data-video-fond><source src="${esc(s)}" type="${type}"></video><button class="video-pause" type="button" data-video-pause aria-label="Mettre la vidéo en pause" aria-pressed="false">${ICO_PAUSE}</button>`;
+}
 function img(p, largeur, cls, prio, alt) {
   const s = src(p, largeur);
   return s ? `<img class="${cls}" src="${esc(s)}" alt="${esc(alt || '')}" ${prio ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">` : '';
@@ -206,14 +215,14 @@ const filtres = (D, liste, actif, base) => {
 /* ---------- Pages ---------- */
 function accueil(C, D) {
   const A = C.accueil || {}, M = C.maison || {};
-  const video = /^https:\/\/\S+\.(mp4|webm)(\?\S*)?$/i.test(A.video || '') ? A.video : '';
+  const video = A.fond_video !== false ? videoSrc(A.video) : '';
   const choix = D.pieces.slice(0, 8);
   return {
     classe: 'p-accueil', image: A.photo,
     jsonld: { '@context': 'https://schema.org', '@type': 'Organization', name: M.nom, description: M.description_google || '', ...((C.reglages || {}).url ? { url: C.reglages.url } : {}), sameAs: ['instagram', 'linkedin', 'pinterest', 'youtube'].map((k) => M[k]).filter((u) => /^https:\/\//.test(u || '')) },
     corps: `
   <section class="hero">
-    ${video ? `<video class="hero-media" autoplay muted loop playsinline${src(A.photo, 2000) ? ` poster="${esc(src(A.photo, 2000))}"` : ''}><source src="${esc(video)}"></video>` : img(A.photo, 2200, 'hero-media', true, '')}
+    ${video ? videoFond(video, src(A.photo, 2000), 'hero-media') : img(A.photo, 2200, 'hero-media', true, '')}
     <div class="hero-txt wrap">
       <h1>${esc(A.titre || M.nom)}</h1>
       ${A.texte ? `<p>${esc(A.texte)}</p>` : ''}

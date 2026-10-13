@@ -26,6 +26,19 @@ Le lien est accessible à quiconque l'a, mais pas indexé par Google. Chacun tes
 - **La page « La maison »** (histoire, poinçon, archives) est masquée : à écrire avec Anthony, puis l'afficher.
 - `npm run verifier` liste tout ce qui reste à faire.
 
+## Vidéo de fond (accueil)
+
+Dans l'espace maison, rubrique « Accueil » : « Vidéo de fond », puis la case « Vidéo en fond (sinon la photo) ». Case décochée, le site garde la photo, comme avant ; la vidéo reste enregistrée pour plus tard. La photo sert aussi d'image d'attente pendant le chargement, et un petit bouton pause s'affiche en bas à droite (obligatoire pour l'accessibilité). Les visiteurs qui ont demandé moins d'animations voient la vidéo à l'arrêt.
+
+Une vidéo d'exemple est déjà prête : un lent mouvement sur ta photo de la pierre verte (`public/assets/videos/accueil-maison.mp4`). Cochez la case pour la voir.
+
+Une bonne vidéo de fond :
+- **MP4**, 10 à 20 secondes, **sans son** (elle est toujours muette), **à l'horizontale** ;
+- un mouvement lent et régulier (atelier, gestes, matière, lieu), sans texte incrusté, qui boucle bien ;
+- **20 Mo au plus** (8 Mo dans la démonstration). Sur Android, la caméra enregistre déjà en MP4 : coupez la vidéo à 15 secondes dans la galerie, en 1080p ou 720p ;
+- **iPhone** : la caméra enregistre en .mov, que tous les navigateurs ne lisent pas. Envoyez la vidéo à Grégoire (ou à Claude) : elle sera convertie en MP4 léger, ou utilisez une application de conversion.
+- On peut aussi coller un lien https vers un fichier .mp4 déjà en ligne.
+
 ## Mettre en ligne (avec Claude Code)
 
 Compte gratuit sur https://dash.cloudflare.com, puis dans Claude Code, ouvert dans ce dossier :
@@ -48,7 +61,6 @@ Le site est alors en ligne en mode proposition (bandeau, non indexé par Google,
 
 - **Paiement en ligne** : on pourra ajouter Stripe (carte, Apple Pay, Google Pay) au panier sans changer le reste.
 - **Anglais** : le site est en français ; une version anglaise demandera une traduction de chaque texte et de chaque pièce.
-- **Vidéo d'accueil** : un lien .mp4 dans « Accueil » remplace la grande photo.
 
 ## Les commandes
 
