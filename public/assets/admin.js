@@ -75,15 +75,24 @@ const imagesDemo = [], indexDemo = new Map();
 if (DEMO) JSON.stringify(DEMO.contenu, (k, x) => { if (typeof x === 'string' && x.length > 2000 && x.startsWith('data:') && !indexDemo.has(x)) { indexDemo.set(x, imagesDemo.length); imagesDemo.push(x); } return x; });
 const versTexte = (v) => JSON.stringify(v, (k, x) => (typeof x === 'string' && indexDemo.has(x) ? '@image-demo:' + indexDemo.get(x) : x));
 const depuisTexte = (t) => JSON.parse(t, (k, x) => (typeof x === 'string' && x.startsWith('@image-demo:') ? imagesDemo[+x.slice(12)] || '' : x));
+/* Chaque démonstration a sa propre mémoire : tous les fichiers ouverts depuis l'ordinateur partagent la même mémoire du navigateur,
+   la clé dépend donc du site et de sa version (une nouvelle démonstration repart toujours de zéro). */
+const empreinte = (t) => { let h = 5381; for (let i = 0; i < t.length; i += 7) h = ((h * 33) ^ t.charCodeAt(i)) >>> 0; return h.toString(36) + t.length.toString(36); };
+const PREFIXE = DEMO ? 'demo-' + empreinte(JSON.stringify(DEMO.contenu)) + '-' : 'espace-';
+if (DEMO) { try { Object.keys(localStorage).filter((k) => k.startsWith('espace-demo-')).forEach((k) => localStorage.removeItem(k)); } catch (e) { /* rien */ } }
+function remettreAZero() {
+  Object.keys(memoire).forEach((k) => { if (k.startsWith(PREFIXE)) delete memoire[k]; });
+  try { Object.keys(localStorage).filter((k) => k.startsWith(PREFIXE)).forEach((k) => localStorage.removeItem(k)); } catch (e) { /* rien */ }
+}
 const memo = {
   persiste: true,
   lire(k, d) {
-    const c = (DEMO ? 'espace-demo-' : 'espace-') + k;
+    const c = PREFIXE + k;
     if (c in memoire) return depuisTexte(memoire[c]);
     try { const v = localStorage.getItem(c); return v ? depuisTexte(v) : d; } catch (e) { return d; }
   },
   ecrire(k, v) {
-    const c = (DEMO ? 'espace-demo-' : 'espace-') + k, s = versTexte(v);
+    const c = PREFIXE + k, s = versTexte(v);
     let ok = true;
     try { localStorage.setItem(c, s); } catch (e) { ok = false; }
     if (ok || DEMO) memoire[c] = s;
@@ -99,8 +108,8 @@ const demoApi = {
     const avant = memo.lire('contenu', copie(DEMO.contenu));
     if (!memo.ecrire('contenu', C)) throw new Error('Mémoire du téléphone pleine : retirez une photo.');
     /* « Revenir en arrière » de la démonstration : gardé pendant la visite, pour laisser la place au contenu */
-    memoire['espace-demo-precedent'] = versTexte(avant);
-    try { localStorage.removeItem('espace-demo-precedent'); } catch (e) { /* rien */ }
+    memoire[PREFIXE + 'precedent'] = versTexte(avant);
+    try { localStorage.removeItem(PREFIXE + 'precedent'); } catch (e) { /* rien */ }
   },
   async annuler() { const p = memo.lire('precedent', null); if (!p) throw new Error('Aucune version précédente.'); memo.ecrire('contenu', p); return p; },
   async photo(blob) { return await new Promise((ok) => { const f = new FileReader(); f.onload = () => ok(f.result); f.readAsDataURL(blob); }); },
@@ -156,7 +165,8 @@ function ecranConnexion(message) {
   el('div', { class: 'champ' }, el('label', { for: 'mdp', text: 'Mot de passe' }), el('div', { class: 'mdp' }, input, voir)),
   err, bouton,
   el('p', { class: 'aide', text: 'Mot de passe oublié ? Appelez Grégoire.' }),
-  DEMO ? el('button', { type: 'button', class: 'btn sec', text: 'Revoir le site', onclick: vueSiteDemo }) : null);
+  DEMO ? el('button', { type: 'button', class: 'btn sec', text: 'Revoir le site', onclick: vueSiteDemo }) : null,
+  DEMO ? el('button', { type: 'button', class: 'btn discret', text: 'Remettre la démonstration à zéro', onclick: () => { remettreAZero(); ecranConnexion(); toast('Démonstration remise à zéro : le site est revenu à sa version d’origine.'); } }) : null);
   racine.append(el('main', { class: 'connexion' }, form));
   input.focus();
 }
