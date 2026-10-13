@@ -1,0 +1,13 @@
+{
+  // Site de Maison Tcheskiss : Cloudflare Worker + stockage KV.
+  "name": "maison-tcheskiss",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-09-01",
+  "assets": { "directory": "./public", "binding": "ASSETS" },
+  // Remplacer l'id par celui donné par : npx wrangler kv namespace create CONTENU
+  "kv_namespaces": [{ "binding": "CONTENU", "id": "A_REMPLACER" }],
+  // "oui" tant que la maison n'a pas validé : bandeau de proposition, non indexé, demandes en démonstration.
+  "vars": { "MAQUETTE": "oui" }
+  // Après l'achat du domaine (zone ajoutée sur Cloudflare) :
+  // "routes": [{ "pattern": "nomdedomaine.fr", "custom_domain": true }]
+}

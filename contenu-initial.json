@@ -1,0 +1,295 @@
+{
+  "_schema": "maison v1",
+  "maison": {
+    "nom": "Maison Tcheskiss",
+    "logo": "/assets/masque.svg",
+    "logo_texte": "",
+    "ville": "Paris 9e",
+    "adresse": "",
+    "code_postal": "75009",
+    "email": "",
+    "telephone": "",
+    "instagram": "",
+    "linkedin": "",
+    "pinterest": "",
+    "youtube": "",
+    "fabrication": "Créée à Paris",
+    "description_google": "Maison Tcheskiss, joaillerie créée à Paris : bagues, colliers, bracelets, boucles d'oreilles, broches et objets précieux, du dessin en 3D au polissage."
+  },
+  "theme": {
+    "fond": "#faf8f4",
+    "encre": "#161616",
+    "gris": "#5f5a54",
+    "trait": "#e3ded5"
+  },
+  "annonce": {
+    "afficher": false,
+    "texte": ""
+  },
+  "accueil": {
+    "photo": "/assets/photos/atelier-pierre-verte.jpg",
+    "video": "",
+    "titre": "Joaillerie créée à Paris",
+    "texte": "Bijoux et objets précieux, du dessin en 3D au polissage.",
+    "mission": "Une maison qui donne aux joailliers les moyens de créer : des collections variées, du bijou délicat aux pièces les plus inattendues.",
+    "photo_atelier": "/assets/photos/atelier-etabli.jpg"
+  },
+  "collections": [
+    {
+      "id": "tropical",
+      "nom": "Tropical",
+      "couleur": "#2e6a4f",
+      "pale": "#e8f0ea",
+      "photo": "https://images.unsplash.com/photo-1503149779833-1de50ebe5f8a",
+      "texte": "Feuillages, fleurs et animaux des forêts tropicales.",
+      "visible": true
+    },
+    {
+      "id": "desert",
+      "nom": "Désert",
+      "couleur": "#8f5a2e",
+      "pale": "#f4ebe0",
+      "photo": "https://images.unsplash.com/photo-1542401886-65d6c61db217",
+      "texte": "Les dunes, le sable et la lumière du désert.",
+      "visible": true
+    },
+    {
+      "id": "magma",
+      "nom": "Magma",
+      "couleur": "#a2322b",
+      "pale": "#f6e6e3",
+      "photo": "https://images.unsplash.com/photo-1518457607834-6e8d80c183c5",
+      "texte": "La lave, la roche volcanique et le feu.",
+      "visible": true
+    }
+  ],
+  "types": [
+    {
+      "id": "bagues",
+      "nom": "Bagues"
+    },
+    {
+      "id": "colliers",
+      "nom": "Colliers"
+    },
+    {
+      "id": "bracelets",
+      "nom": "Bracelets"
+    },
+    {
+      "id": "boucles-d-oreilles",
+      "nom": "Boucles d'oreilles"
+    },
+    {
+      "id": "broches",
+      "nom": "Broches"
+    },
+    {
+      "id": "masques",
+      "nom": "Masques"
+    },
+    {
+      "id": "lunettes",
+      "nom": "Lunettes"
+    },
+    {
+      "id": "porte-briquets",
+      "nom": "Porte-briquets"
+    },
+    {
+      "id": "manches-de-couteaux",
+      "nom": "Manches de couteaux"
+    }
+  ],
+  "pieces": [
+    {
+      "id": "broche-phoenix",
+      "nom": "Broche Phoenix",
+      "collection": "",
+      "type": "broches",
+      "prix": "2000",
+      "photos": [
+        "/assets/photos/pierre-blanche.jpg",
+        "https://images.unsplash.com/photo-1560427450-00fa9481f01e"
+      ],
+      "photo_portee": "https://images.unsplash.com/photo-1682963135833-ee78c62672b3",
+      "description": "",
+      "metal": "",
+      "pierres": "",
+      "poids": "",
+      "tailles": false,
+      "gravure": false,
+      "vendue": false,
+      "visible": true,
+      "exemple": false
+    },
+    {
+      "id": "bague-tropical",
+      "nom": "Bague Tropical",
+      "collection": "tropical",
+      "type": "bagues",
+      "prix": "",
+      "photos": [
+        "https://images.unsplash.com/photo-1621329109234-d7657d2f3846",
+        "https://images.unsplash.com/photo-1579206593127-8ccc44dc661c"
+      ],
+      "photo_portee": "https://images.unsplash.com/photo-1556376752-19770d78207f",
+      "description": "",
+      "metal": "",
+      "pierres": "",
+      "poids": "",
+      "tailles": true,
+      "gravure": true,
+      "vendue": false,
+      "visible": true,
+      "exemple": true
+    },
+    {
+      "id": "collier-desert",
+      "nom": "Collier Désert",
+      "collection": "desert",
+      "type": "colliers",
+      "prix": "",
+      "photos": [
+        "/assets/photos/pierre-peche.jpg",
+        "https://images.unsplash.com/photo-1682963135833-ee78c62672b3"
+      ],
+      "photo_portee": "https://images.unsplash.com/photo-1548357194-9e1aace4e94d",
+      "description": "",
+      "metal": "",
+      "pierres": "",
+      "poids": "",
+      "tailles": false,
+      "gravure": false,
+      "vendue": false,
+      "visible": true,
+      "exemple": true
+    },
+    {
+      "id": "boucles-magma",
+      "nom": "Boucles d'oreilles Magma",
+      "collection": "magma",
+      "type": "boucles-d-oreilles",
+      "prix": "",
+      "photos": [
+        "https://images.unsplash.com/photo-1579206593127-8ccc44dc661c",
+        "https://images.unsplash.com/photo-1621329109234-d7657d2f3846"
+      ],
+      "photo_portee": "https://images.unsplash.com/photo-1560427450-00fa9481f01e",
+      "description": "",
+      "metal": "",
+      "pierres": "",
+      "poids": "",
+      "tailles": false,
+      "gravure": false,
+      "vendue": false,
+      "visible": true,
+      "exemple": true
+    },
+    {
+      "id": "bracelet-tropical",
+      "nom": "Bracelet Tropical",
+      "collection": "tropical",
+      "type": "bracelets",
+      "prix": "",
+      "photos": [
+        "https://images.unsplash.com/photo-1682963135833-ee78c62672b3",
+        "https://images.unsplash.com/photo-1548357194-9e1aace4e94d"
+      ],
+      "photo_portee": "https://images.unsplash.com/photo-1621329109234-d7657d2f3846",
+      "description": "",
+      "metal": "",
+      "pierres": "",
+      "poids": "",
+      "tailles": false,
+      "gravure": true,
+      "vendue": false,
+      "visible": true,
+      "exemple": true
+    },
+    {
+      "id": "bague-magma",
+      "nom": "Bague Magma",
+      "collection": "magma",
+      "type": "bagues",
+      "prix": "",
+      "photos": [
+        "https://images.unsplash.com/photo-1560427450-00fa9481f01e",
+        "https://images.unsplash.com/photo-1579206593127-8ccc44dc661c"
+      ],
+      "photo_portee": "https://images.unsplash.com/photo-1682963135833-ee78c62672b3",
+      "description": "",
+      "metal": "",
+      "pierres": "",
+      "poids": "",
+      "tailles": true,
+      "gravure": true,
+      "vendue": false,
+      "visible": true,
+      "exemple": true
+    }
+  ],
+  "pages": {
+    "atelier": {
+      "afficher": true,
+      "titre": "L'atelier",
+      "photos": [
+        "/assets/photos/atelier-dessin.jpg",
+        "/assets/photos/atelier-diamants-boite.jpg",
+        "/assets/photos/atelier-burin.jpg",
+        "/assets/photos/atelier-diamants-plateau.jpg"
+      ],
+      "texte": "Chaque pièce passe entre les mains de plusieurs métiers de la joaillerie.\n\n## La CAO\nLa pièce est dessinée et mise au point en 3D, à l'échelle exacte, avant d'exister en métal.\n\n## Les joailliers\nIls façonnent le métal, ajustent, soudent et assemblent chaque élément.\n\n## Les sertisseurs\nIls fixent les pierres une à une dans le métal.\n\n## Les graveurs\nIls gravent motifs et inscriptions dans le métal.\n\n## Les polisseurs\nIls donnent à la pièce son éclat final.\n\n## Lexique\n- Sertir : fixer une pierre dans le métal, par des griffes, un clos ou des grains.\n- Pavage : surface couverte de petites pierres serties côte à côte.\n- Poinçon de maître : marque en losange propre à chaque fabricant, frappée sur la pièce.\n- Poinçon de garantie : en France, il atteste la teneur en métal précieux ; la tête d'aigle marque l'or 18 carats.\n- CAO : conception assistée par ordinateur, le dessin en 3D de la pièce."
+    },
+    "maison": {
+      "afficher": false,
+      "titre": "La maison",
+      "photos": [],
+      "texte": ""
+    },
+    "entretien": {
+      "afficher": true,
+      "titre": "Entretien",
+      "photos": [],
+      "texte": "Quelques gestes simples gardent vos bijoux beaux longtemps.\n\n## Au quotidien\n- Mettez vos bijoux après le parfum, la crème et la laque.\n- Retirez-les pour le sport, la piscine, la mer et le ménage.\n- Rangez chaque pièce séparément, dans sa pochette ou son écrin, pour éviter les rayures.\n\n## Le nettoyage\n- Or et argent : eau tiède, un peu de savon doux, une brosse très souple, puis un chiffon doux et sec.\n- Perles et pierres fragiles (opale, émeraude, turquoise) : un chiffon doux à peine humide, jamais de trempage.\n- Pas d'ultrasons ni de produit chimique sans l'avis d'un joaillier.\n\n## La révision\nFaites vérifier griffes et sertis par un joaillier une fois par an, surtout pour les bagues portées tous les jours."
+    },
+    "tailles": {
+      "afficher": true,
+      "titre": "Guide des tailles",
+      "photos": [],
+      "texte": "La taille d'une bague correspond au tour de doigt en millimètres : une taille 52 fait 52 mm de tour.\n\n## Mesurer votre doigt\n- Entourez la base du doigt avec une bande de papier, plutôt en fin de journée.\n- Marquez le point de rencontre, puis mesurez la longueur en millimètres : c'est votre taille.\n\n## Avec une bague que vous portez déjà\nMesurez son diamètre intérieur et lisez la taille dans le tableau.\n\nEn cas de doute entre deux tailles, prenez la plus grande et indiquez-le dans votre demande."
+    },
+    "commande": {
+      "afficher": true,
+      "titre": "Commande et livraison",
+      "photos": [],
+      "texte": "## Commander\nAjoutez les pièces qui vous plaisent au panier, avec la taille et la gravure si besoin, puis envoyez votre demande. Rien n'est payé en ligne.\n\n## La suite\nLa maison vous répond sous {delai} pour confirmer la disponibilité, le délai de fabrication, le prix, le paiement et la livraison.\n\n## Livraison\nEn France et à l'international. Le mode d'envoi et son prix vous sont indiqués avant toute commande."
+    },
+    "conditions": {
+      "afficher": true,
+      "titre": "Conditions de vente",
+      "photos": [],
+      "texte": "## Objet\nCes conditions s'appliquent aux ventes de {maison} conclues à distance, après une demande envoyée depuis ce site.\n\n## Commande\nLa demande envoyée depuis le panier n'engage ni le client ni la maison. La vente est conclue quand la maison confirme par écrit la pièce, le prix, le délai, le paiement et la livraison, et que le client accepte.\n\n## Prix\nLes prix sont indiqués en euros, toutes taxes comprises. Les frais de livraison sont précisés avant la confirmation.\n\n## Paiement et livraison\nLes modalités de paiement, le délai et le mode de livraison sont précisés dans la confirmation de commande.\n\n## Droit de rétractation\nPour un achat à distance, le client dispose de 14 jours à compter de la réception pour se rétracter, sans avoir à se justifier. Ce droit ne s'applique pas aux pièces fabriquées selon ses demandes ou nettement personnalisées, par exemple gravées (article L221-28 du Code de la consommation).\n\n## Garanties\nLes pièces bénéficient de la garantie légale de conformité et de la garantie des vices cachés.\n\n## Médiation\nEn cas de litige, le client peut recourir gratuitement au médiateur de la consommation : {mediateur}."
+    }
+  },
+  "commandes": {
+    "actif": true,
+    "delai_reponse": "48 heures",
+    "cle_web3forms": "",
+    "email": "",
+    "confirmation": "Merci, votre demande est partie. La maison vous répond sous {delai} pour confirmer chaque détail."
+  },
+  "mentions": {
+    "raison_sociale": "",
+    "forme": "",
+    "siret": "",
+    "adresse": "",
+    "directeur_publication": "",
+    "email": "",
+    "mediateur": ""
+  },
+  "credits_photos": "Photos de l'atelier et des pierres : Maison Tcheskiss. Photos d'essai : Bart Zimny, Wolfgang Hasselmann, Marc Szeglat, Franco Antonio Giovanella, Edz Norton, Emily Karakis, Ilze Lucero, lilartsy, J D (Unsplash). Elles seront remplacées par les photos de la maison.",
+  "reglages": {
+    "url": ""
+  }
+}
