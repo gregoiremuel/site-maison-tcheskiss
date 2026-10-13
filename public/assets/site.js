@@ -34,6 +34,35 @@
     }, true);
   }
 
+  /* Mouvement discret : le texte de l'accueil arrive, le reste apparaît doucement au défilement.
+     Rien si le visiteur demande moins d'animations, ni dans l'aperçu de l'espace maison (classe « calme »). */
+  (function () {
+    var calme = document.body.classList.contains('calme') || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var tete = document.querySelector('.tete');
+    if (tete) { var majTete = function () { tete.classList.toggle('defile', window.scrollY > 24); }; majTete(); window.addEventListener('scroll', majTete, { passive: true }); }
+    if (calme) return;
+    document.documentElement.classList.add('anime');
+    var CIBLES = ['.sec-tete', '.colls li', '.grille .carte', '.bande-txt', '.coll-tete-txt', '.info-txt', '.info-img'];
+    var els = [];
+    CIBLES.forEach(function (sel) {
+      Array.prototype.forEach.call(document.querySelectorAll(sel), function (el) {
+        if (el.closest('.hero') || el.classList.contains('rev')) return;
+        var freres = Array.prototype.filter.call(el.parentNode.children, function (x) { return x.matches(sel); });
+        el.classList.add('rev');
+        el.style.transitionDelay = (Math.min(freres.indexOf(el), 3) * 90) + 'ms';
+        els.push(el);
+      });
+    });
+    var montrer = function (el) { el.classList.add('vu'); };
+    if (!('IntersectionObserver' in window)) { els.forEach(montrer); return; }
+    var io = new IntersectionObserver(function (entrees) {
+      entrees.forEach(function (en) { if (en.isIntersecting) { montrer(en.target); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+    els.forEach(function (el) { io.observe(el); });
+    /* Filet de sécurité : rien ne reste caché */
+    setTimeout(function () { els.forEach(function (el) { if (!el.classList.contains('vu') && el.getBoundingClientRect().top < innerHeight) montrer(el); }); }, 2500);
+  })();
+
   /* Menu */
   var btn = $('#menu-btn'), volet = $('#menu');
   if (btn && volet) {

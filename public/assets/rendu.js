@@ -98,7 +98,7 @@ const ico = {
 
 export const favicon = (C) => src((C.maison || {}).logo, 64) || 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#161616"/></svg>');
 
-/* o = { maquette, urlPolice, css | cssHref, js | jsHref, lienAdmin, apiCommande, apercu, panierInitial } */
+/* o = { maquette, urlPolice, css | cssHref, js | jsHref, lienAdmin, apiCommande, apercu, panierInitial, calme (aperçu de l'espace maison : sans animations) } */
 function document_(C, o, page) {
   const M = C.maison || {}, T = C.theme || {}, D = donnees(C), K = C.commandes || {};
   const nom = M.nom || 'Maison';
@@ -175,7 +175,7 @@ ${page.image ? `<meta property="og:image" content="${esc(src(page.image, 1200))}
 <link rel="icon" href="${esc(favicon(C))}">
 ${style}
 </head>
-<body class="${page.classe || ''}"${accent}>
+<body class="${page.classe || ''}${o.calme ? ' calme' : ''}"${accent}>
 <a class="skip" href="#contenu">Aller au contenu</a>
 ${o.maquette ? `<div class="maquette" role="note">Proposition de site pour ${esc(nom)}, préparée par Grégoire Muel. Version de travail non publiée : textes, prix et photos à valider.</div>` : ''}
 ${C.annonce && C.annonce.afficher && C.annonce.texte ? `<div class="annonce" role="status">${esc(C.annonce.texte)}</div>` : ''}

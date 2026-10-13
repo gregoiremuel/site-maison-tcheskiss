@@ -571,8 +571,8 @@ let cadres = [];
 function rendreApercu(enHaut) {
   assurerIds(E.C);
   const o = DEMO
-    ? optsDemo({ panierInitial: E.panierApercu || [] })
-    : { maquette: E.maquette, cssHref: '/assets/site.css', jsHref: '/assets/site.js', apiCommande: '', apercu: true, panierInitial: E.panierApercu || [] };
+    ? optsDemo({ panierInitial: E.panierApercu || [], calme: true })
+    : { maquette: E.maquette, cssHref: '/assets/site.css', jsHref: '/assets/site.js', apiCommande: '', apercu: true, panierInitial: E.panierApercu || [], calme: true };
   const page = rendrePage(E.C, E.page || '/', o).html;
   cadres.forEach((f) => {
     let y = 0; try { y = enHaut ? 0 : f.contentWindow.scrollY; } catch (e) { /* rien */ }
